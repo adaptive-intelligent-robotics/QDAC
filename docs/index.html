@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="description" content="QDAC is a quality-diversity reinforcement learning algorithm that discovers high-performing and diverse skills.">
+	<meta name="keywords" content="Quality-Diversity Actor-Critic, QDAC, Quality-Diversity, Reinforcement Learning">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>Quality-Diversity Actor-Critic</title>
+
+	<link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+	<link rel="stylesheet" href="./static/css/bulma.min.css">
+	<link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+	<link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+	<link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+	<link rel="stylesheet" href="./static/css/index.css">
+	<link rel="icon" href="./static/images/favicon.png">
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script defer src="./static/js/fontawesome.all.min.js"></script>
+	<script src="./static/js/bulma-carousel.min.js"></script>
+	<script src="./static/js/bulma-slider.min.js"></script>
+	<script src="./static/js/index.js"></script>
+</head>
+
+<body>
+<section class="hero">
+	<div class="hero-body">
+		<div class="container is-max-desktop">
+			<div class="columns is-centered">
+				<div class="column has-text-centered">
+					<h1 class="title is-1 publication-title"><span style="color: #e1144b;">Quality</span>-<span style="color: #0053d6;">Diversity</span> Actor-Critic:<br/><span style="color: #7a7a7a;">Learning High-Performing and Diverse Behaviors via Value and Successor Features Critics</span></h1>
+					<div class="is-size-5 publication-authors">
+						<span class="author-block">
+							<a href="https://luca.grillotti.com">Luca Grillotti</a><sup>*1</sup>,</span>
+						<span class="author-block">
+							<a href="https://maxencefaldor.github.io/">Maxence Faldor</a><sup>*1</sup>,</span>
+						<span class="author-block">
+							<a href="https://www.doc.ic.ac.uk/~bg19/">Borja Gonzalez Leon</a><sup>2</sup>,
+						</span>
+						<span class="author-block">
+							<a href="https://profiles.imperial.ac.uk/a.cully">Antoine Cully</a><sup>1</sup>,
+						</span>
+					</div>
+
+					<div class="is-size-5 publication-authors">
+						<span class="author-block"><sup>*</sup>Equal Contribution,</span>
+						<span class="author-block"><sup>1</sup>Imperial College London,</span>
+						<span class="author-block"><sup>2</sup>Iconic AI</span>
+					</div>
+
+					<div class="is-size-5 has-text-centered">
+						<span class="tag is-success is-light">ICML 2024</span>
+					</div>
+
+					<div class="column has-text-centered">
+						<div class="publication-links">
+							<!-- PDF Link. -->
+							<span class="link-block">
+								<a href="https://arxiv.org/pdf/2403.09930"
+									 class="external-link button is-normal is-rounded is-dark">
+									<span class="icon">
+											<i class="fas fa-file-pdf"></i>
+									</span>
+									<span>Paper</span>
+								</a>
+							</span>
+							<span class="link-block">
+								<a href="https://arxiv.org/abs/2403.09930"
+									 class="external-link button is-normal is-rounded is-dark">
+									<span class="icon">
+											<i class="ai ai-arxiv"></i>
+									</span>
+									<span>arXiv</span>
+								</a>
+							</span>
+							<!-- Code Link. -->
+							<span class="link-block">
+								<a href="https://github.com/adaptive-intelligent-robotics/QDAC"
+									 class="external-link button is-normal is-rounded is-dark">
+									<span class="icon">
+											<i class="fab fa-github"></i>
+									</span>
+									<span>Code</span>
+								</a>
+							</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section class="hero is-light is-small">
+	<div class="hero-body">
+		<div class="container">
+			<div id="results-carousel" class="carousel results-carousel">
+				<div class="item">
+					<video poster="" autoplay muted loop playsinline height="100%" title="Humanoid - Hurdles">
+						<source src="./static/videos/carousel_humanoid_hurdles_1.mp4" type="video/mp4">
+					</video>
+				</div>
+				<div class="item">
+					<video poster="" autoplay muted loop playsinline height="100%" title="Walker - Feet Contact">
+						<source src="./static/videos/carousel_walker2d_feet_contact_1.mp4" type="video/mp4">
+					</video>
+				</div>
+				<div class="item">
+					<video poster="" autoplay muted loop playsinline height="100%" title="Ant - Wall">
+						<source src="./static/videos/carousel_ant_wall.mp4" type="video/mp4">
+					</video>
+				</div>
+				<div class="item">
+					<video poster="" autoplay muted loop playsinline height="100%" title="Humanoid - Angle sidesteps">
+						<source src="./static/videos/carousel_humanoid_angle_sidesteps.mp4" type="video/mp4">
+					</video>
+				</div>
+				<div class="item">
+					<video poster="" autoplay muted loop playsinline height="100%" title="Walker - Friction">
+						<source src="./static/videos/carousel_walker2d_friction.mp4" type="video/mp4">
+					</video>
+				</div>
+				<div class="item">
+					<video poster="" autoplay muted loop playsinline height="100%" title="Humanoid - Angle moonwalk">
+						<source src="./static/videos/carousel_humanoid_moonwalk.mp4" type="video/mp4">
+					</video>
+				</div>
+				<div class="item">
+					<video poster="" autoplay muted loop playsinline height="100%" title="Walker - Feet Contact">
+						<source src="./static/videos/carousel_walker2d_feet_contact_2.mp4" type="video/mp4">
+					</video>
+				</div>
+				<div class="item">
+					<video poster="" autoplay muted loop playsinline height="100%" title="Humanoid - Feet Contact">
+						<source src="./static/videos/carousel_humanoid_feet_contact.mp4" type="video/mp4">
+					</video>
+				</div>
+				<div class="item">
+					<video poster="" autoplay muted loop playsinline height="100%" title="Humanoid - Motor Failure">
+						<source src="./static/videos/carousel_humanoid_failure.mp4" type="video/mp4">
+					</video>
+				</div>
+				<div class="item">
+					<video poster="" autoplay muted loop playsinline height="100%" title="Humanoid - Hurdles">
+						<source src="./static/videos/carousel_humanoid_hurdles_2.mp4" type="video/mp4">
+					</video>
+				</div>
+				<div class="item">
+					<video poster="" autoplay muted loop playsinline height="100%" title="Ant - Gravity">
+						<source src="./static/videos/carousel_ant_gravity.mp4" type="video/mp4">
+					</video>
+				</div>
+				<div class="item">
+					<video poster="" autoplay muted loop playsinline height="100%" title="Humanoid - Jump">
+						<source src="./static/videos/carousel_humanoid_jump.mp4" type="video/mp4">
+					</video>
+				</div>
+			</div>
+			<h2 class="subtitle has-text-centered">
+				<span class="dnerf">QDAC</span> is a quality-diversity reinforcement learning algorithm that discovers <span style="color: #e1144b;">high-performing</span> and <span style="color: #0053d6;">diverse</span> skills.
+			</h2>
+		</div>
+	</div>
+</section>
+
+<section class="section">
+	<div class="container is-max-desktop">
+		<!-- Abstract. -->
+		<div class="columns is-centered has-text-centered">
+			<div class="column is-four-fifths">
+				<h2 class="title is-3">Abstract</h2>
+				<div class="content has-text-justified">
+					<p>
+						A key aspect of intelligence is the ability to demonstrate a broad spectrum of behaviors for adapting to unexpected situations. Over the past decade, advancements in deep reinforcement learning have led to groundbreaking achievements to solve complex continuous control tasks. However, most approaches return <b>only one</b> solution specialized for a specific problem.
+					</p>
+					<p>
+						We introduce <span class="dnerf">Quality-Diversity Actor-Critic</span> (QDAC), an off-policy actor-critic deep reinforcement learning algorithm that leverages a <span style="color: #e1144b;">value function</span> critic and a <span style="color: #0053d6;">successor features</span> critic to learn high-performing and diverse behaviors. In this framework, the actor optimizes an objective that seamlessly unifies both critics using <b>constrained optimization</b> to (1) <span style="color: #e1144b;">maximize return</span>, while (2) <span style="color: #0053d6;">executing diverse skills</span>.
+					</p>
+					<p>
+						Compared with other Quality-Diversity methods, QDAC achieves significantly higher performance and more diverse behaviors on six challenging continuous control locomotion tasks. We also demonstrate that we can harness the learned skills to adapt better than other baselines to five perturbed environments. Finally, qualitative analyses showcase a range of remarkable behaviors.
+					</p>
+				</div>
+			</div>
+		</div>
+		<!--/ Abstract. -->
+	</div>
+</section>
+
+<section class="section">
+	<div class="container is-max-desktop">
+		<!-- Method -->
+		<div class="columns is-centered">
+			<div class="column is-full-width">
+				<h2 class="title is-3">Method</h2>
+					<p>
+						We formalize Quality-Diversity optimization as a constraint optimization problem. We intend to learn a skill-conditioned policy that (1) maximizes the expected return, and (2) is subject to the expected features converge to the desired skill.
+					</p><br/>
+					<p>
+						We introduce an actor-critic method that leverages two critics: a performance critic (i.e., a value function) to optimize (1), and a behavior critic (i.e., a successor features) to optimize (2).
+					</p><br/>
+					<p>
+						The actor optimizes an objective that seamlessly unifies both critics using constrained optimization to (1) maximize return, while (2) executing diverse skills.
+					</p>
+					<div class="hero-body" style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+						<img src="./static/images/qdac.jpg" height="100%">
+						<h2 class="subtitle has-text-centered">
+							<span class="dnerf">QDAC</span> seamlessly unifies <span style="color: #e1144b;">performance</span> and <span style="color: #0053d6;">behavior</span> critics using <b>constrained optimization</b> to<br/>(1) <span style="color: #e1144b;">maximize return</span>, while (2) <span style="color: #0053d6;">executing diverse skills</span>.
+						</h2>
+					</div>
+			</div>
+		</div>
+		<!--/ Method -->
+
+		<!-- Tasks -->
+		<div class="columns is-centered">
+			<div class="column is-full-width">
+				<h2 class="title is-3">Tasks</h2>
+
+				<!-- Humanoid - Jump -->
+				<h3 class="title is-4">Humanoid - Jump</h3>
+				<div class="columns is-centered">
+					<div class="column">
+						<a href="static/html/humanoid_jump_1.html" target="_blank">
+							<video class="video-episode" width="100%" height="400px" poster="" autoplay muted loop playsinline>
+								<source src="static/videos/humanoid_jump_1.mp4" type="video/mp4">
+							</video>
+						</a>
+						<div class="has-text-centered">
+							<img src="static/images/one.svg" alt="1">
+						</div>
+					</div>
+					<div class="column">
+						<a href="static/html/humanoid_jump_2.html" target="_blank">
+							<video class="video-episode" width="100%" height="400px" poster="" autoplay muted loop playsinline>
+								<source src="static/videos/humanoid_jump_2.mp4" type="video/mp4">
+							</video>
+						</a>
+						<div class="has-text-centered">
+							<img src="static/images/two.svg" alt="2">
+						</div>
+					</div>
+					<div class="column">
+						<a href="static/html/humanoid_jump_3.html" target="_blank">
+							<video class="video-episode" width="100%" height="400px" poster="" autoplay muted loop playsinline>
+								<source src="static/videos/humanoid_jump_3.mp4" type="video/mp4">
+							</video>
+						</a>
+						<div class="has-text-centered">
+							<img src="static/images/three.svg" alt="3">
+						</div>
+					</div>
+				</div>
+				<div class="column has-text-centered">
+					<img src="static/images/humanoid_jump.svg" alt="Humanoid Jump Archive">
+				</div>
+				<br/>
+				<!--/ Humanoid - Jump -->
+
+				<!-- Humanoid - Angle -->
+				<h3 class="title is-4">Humanoid - Angle</h3>
+				<div class="columns is-centered">
+					<div class="column">
+						<a href="static/html/humanoid_angle_1.html" target="_blank">
+							<video class="video-episode" width="100%" height="400px" poster="" autoplay muted loop playsinline>
+								<source src="static/videos/humanoid_angle_1.mp4" type="video/mp4">
+							</video>
+						</a>
+						<div class="has-text-centered">
+							<img src="static/images/one.svg" alt="1">
+						</div>
+					</div>
+					<div class="column">
+						<a href="static/html/humanoid_angle_2.html" target="_blank">
+							<video class="video-episode" width="100%" height="400px" poster="" autoplay muted loop playsinline>
+								<source src="static/videos/humanoid_angle_2.mp4" type="video/mp4">
+							</video>
+						</a>
+						<div class="has-text-centered">
+							<img src="static/images/two.svg" alt="2">
+						</div>
+					</div>
+					<div class="column">
+						<a href="static/html/humanoid_angle_3.html" target="_blank">
+							<video class="video-episode" width="100%" height="400px" poster="" autoplay muted loop playsinline>
+								<source src="static/videos/humanoid_angle_3.mp4" type="video/mp4">
+							</video>
+						</a>
+						<div class="has-text-centered">
+							<img src="static/images/three.svg" alt="3">
+						</div>
+					</div>
+				</div>
+				<div class="column has-text-centered">
+					<img src="static/images/humanoid_angle.svg" alt="Humanoid Angle Archive">
+				</div>
+				<br/>
+				<!--/ Humanoid - Angle -->
+
+				<!-- Humanoid - Feet Contact -->
+				<h3 class="title is-4">Humanoid - Feet Contact</h3>
+				<div class="columns is-centered">
+					<div class="column">
+						<a href="static/html/humanoid_feet_contact_1.html" target="_blank">
+							<video class="video-episode" width="100%" height="400px" poster="" autoplay muted loop playsinline>
+								<source src="static/videos/humanoid_feet_contact_1.mp4" type="video/mp4">
+							</video>
+						</a>
+						<div class="has-text-centered">
+							<img src="static/images/one.svg" alt="1">
+						</div>
+					</div>
+					<div class="column">
+						<a href="static/html/humanoid_feet_contact_2.html" target="_blank">
+							<video class="video-episode" width="100%" height="400px" poster="" autoplay muted loop playsinline>
+								<source src="static/videos/humanoid_feet_contact_2.mp4" type="video/mp4">
+							</video>
+						</a>
+						<div class="has-text-centered">
+							<img src="static/images/two.svg" alt="2">
+						</div>
+					</div>
+					<div class="column">
+						<a href="static/html/humanoid_feet_contact_3.html" target="_blank">
+							<video class="video-episode" width="100%" height="400px" poster="" autoplay muted loop playsinline>
+								<source src="static/videos/humanoid_feet_contact_3.mp4" type="video/mp4">
+							</video>
+						</a>
+						<div class="has-text-centered">
+							<img src="static/images/three.svg" alt="3">
+						</div>
+					</div>
+				</div>
+				<div class="column has-text-centered">
+					<img src="static/images/humanoid_feet_contact.svg" alt="Humanoid Feet Contact Archive">
+				</div>
+				<br/>
+				<!--/ Humanoid - Feet Contact -->
+
+				<!-- Walker - Feet Contact -->
+				<h3 class="title is-4">Walker - Feet Contact</h3>
+				<div class="columns is-centered">
+					<div class="column">
+						<a href="static/html/walker2d_feet_contact_1.html" target="_blank">
+							<video class="video-episode" width="100%" height="400px" poster="" autoplay muted loop playsinline>
+								<source src="static/videos/walker2d_feet_contact_1.mp4" type="video/mp4">
+							</video>
+						</a>
+						<div class="has-text-centered">
+							<img src="static/images/one.svg" alt="1">
+						</div>
+					</div>
+					<div class="column">
+						<a href="static/html/walker2d_feet_contact_2.html" target="_blank">
+							<video class="video-episode" width="100%" height="400px" poster="" autoplay muted loop playsinline>
+								<source src="static/videos/walker2d_feet_contact_2.mp4" type="video/mp4">
+							</video>
+						</a>
+						<div class="has-text-centered">
+							<img src="static/images/two.svg" alt="2">
+						</div>
+					</div>
+					<div class="column">
+						<a href="static/html/walker2d_feet_contact_3.html" target="_blank">
+							<video class="video-episode" width="100%" height="400px" poster="" autoplay muted loop playsinline>
+								<source src="static/videos/walker2d_feet_contact_3.mp4" type="video/mp4">
+							</video>
+						</a>
+						<div class="has-text-centered">
+							<img src="static/images/three.svg" alt="3">
+						</div>
+					</div>
+				</div>
+				<div class="column has-text-centered">
+					<img src="static/images/walker2d_feet_contact.svg" alt="Walker Feet Contact Archive">
+				</div>
+				<br/>
+				<!--/ Walker - Feet Contact -->
+
+				<!-- Ant - Feet Contact -->
+				<h3 class="title is-4">Ant - Feet Contact</h3>
+				<div class="columns is-centered">
+					<div class="column">
+						<a href="static/html/ant_feet_contact_1.html" target="_blank">
+							<video class="video-episode" width="100%" height="400px" poster="" autoplay muted loop playsinline>
+								<source src="static/videos/ant_feet_contact_1.mp4" type="video/mp4">
+							</video>
+						</a>
+						<div class="has-text-centered">
+							<img src="static/images/one.svg" alt="1">
+						</div>
+					</div>
+					<div class="column">
+						<a href="static/html/ant_feet_contact_2.html" target="_blank">
+							<video class="video-episode" width="100%" height="400px" poster="" autoplay muted loop playsinline>
+								<source src="static/videos/ant_feet_contact_2.mp4" type="video/mp4">
+							</video>
+						</a>
+						<div class="has-text-centered">
+							<img src="static/images/two.svg" alt="2">
+						</div>
+					</div>
+					<div class="column">
+						<a href="static/html/ant_feet_contact_3.html" target="_blank">
+							<video class="video-episode" width="100%" height="400px" poster="" autoplay muted loop playsinline>
+								<source src="static/videos/ant_feet_contact_3.mp4" type="video/mp4">
+							</video>
+						</a>
+						<div class="has-text-centered">
+							<img src="static/images/three.svg" alt="3">
+						</div>
+					</div>
+				</div>
+				<div class="column has-text-centered">
+					<img src="static/images/ant_feet_contact.svg" alt="Ant Feet Contact Archive">
+				</div>
+				<br/>
+				<!--/ Ant - Feet Contact -->
+
+				<!-- Ant - Velocity -->
+				<h3 class="title is-4">Ant - Velocity</h3>
+				<div class="columns is-centered">
+					<div class="column">
+						<a href="static/html/ant_velocity_1.html" target="_blank">
+							<video class="video-episode" width="100%" height="400px" poster="" autoplay muted loop playsinline>
+								<source src="static/videos/ant_velocity_1.mp4" type="video/mp4">
+							</video>
+						</a>
+						<div class="has-text-centered">
+							<img src="static/images/one.svg" alt="1">
+						</div>
+					</div>
+					<div class="column">
+						<a href="static/html/ant_velocity_2.html" target="_blank">
+							<video class="video-episode" width="100%" height="400px" poster="" autoplay muted loop playsinline>
+								<source src="static/videos/ant_velocity_2.mp4" type="video/mp4">
+							</video>
+						</a>
+						<div class="has-text-centered">
+							<img src="static/images/two.svg" alt="2">
+						</div>
+					</div>
+					<div class="column">
+						<a href="static/html/ant_velocity_3.html" target="_blank">
+							<video class="video-episode" width="100%" height="400px" poster="" autoplay muted loop playsinline>
+								<source src="static/videos/ant_velocity_3.mp4" type="video/mp4">
+							</video>
+						</a>
+						<div class="has-text-centered">
+							<img src="static/images/three.svg" alt="3">
+						</div>
+					</div>
+				</div>
+				<div class="column has-text-centered">
+					<img src="static/images/ant_velocity.svg" alt="Ant Velocity Archive">
+				</div>
+				<br/>
+				<!--/ Ant - Velocity -->
+
+			</div>
+		</div>
+		<!--/ Tasks -->
+
+		<!-- Conclusion -->
+		<div class="columns is-centered">
+			<div class="column is-full-width">
+				<h2 class="title is-3">Conclusion</h2>
+				<div class="content has-text-justified">
+					<p>
+						In this work, we introduce a novel Quality-Diversity algorithm fully formalized as an actor-critic method. This approach leverages both a <span style="color: #e1144b;">performance critic</span> and a <span style="color: #0053d6;">behavior critic</span> to learn high-performing and diverse behaviors. Within this framework, the actor optimizes an objective that seamlessly integrates these two critics with a <b>Lagrange multiplier</b>, using constrained optimization to (1) <span style="color: #e1144b;">maximize return</span> and (2) <span style="color: #0053d6;">execute diverse skills</span>.
+					</p>
+					<p>
+						We demonstrate that our approach is competitive compared to traditional Quality-Diversity methods. Quantitative results demonstrate that QDAC is competitive in adaptation tasks, while qualitative analyses reveal a range of diverse and remarkable behaviors.
+					</p>
+					<p>
+						Most Quality-Diversity methods determine the skill (i.e., descriptor) <b>after</b> the episode is terminated, resulting in <em>backward-looking</em> approach. In constrast, we introduce an innovative <em>forward-looking</em> approach, that leverages successor features to predict the skill to be executed by the policy. This is crucial, as it allows the successor features to act as a critic, evaluating the policy's actions to ensure the execution of the desired skill.
+					</p>
+					<p>
+						Furthermore, like the vast majority of Quality-Diversity algorithms, QDAC uses a manually defined diversity measure to guide the diversity search towards relevant behaviors. An exciting direction for future work would be to combine QDAC with an unsupervised method to discover task-agnostic skills.
+					</p>
+				</div>
+			</div>
+		</div>
+		<!--/ Conclusion -->
+	</div>
+</section>
+
+<section class="section" id="BibTeX">
+	<div class="container is-max-desktop content">
+		<h2 class="title">BibTeX</h2>
+		<pre><code>@inproceedings{airl2024qdac,
+title={Quality-Diversity Actor-Critic: Learning High-Performing and Diverse Behaviors via Value and Successor Features Critics},
+author={Grillotti, Luca and Faldor, Maxence and González León, Borja and Cully, Antoine},
+booktitle={International Conference on Machine Learning},
+year={2024},
+organization={PMLR}
+}</code></pre>
+	</div>
+</section>
+
+<footer class="footer">
+	<div class="container">
+		<div class="columns is-centered">
+			<div class="column is-8">
+				<div class="content">
+					<p>
+						This website template is borrowed from <a href="https://nerfies.github.io">nerfies.github.io</a>.
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</footer>
+
+</body>
+</html>

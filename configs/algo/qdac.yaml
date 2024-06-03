@@ -1,0 +1,34 @@
+name: qdac
+
+num_iterations: 50_000
+log_period: 100
+warmup_steps: 512_000
+env_batch_size: 256
+
+# Env
+backend: spring
+episode_length: 1000
+
+# SAC
+hidden_layer_sizes: [256, 256]
+grad_updates_per_step: 1
+batch_size: 256
+replay_buffer_size: 1_024_000
+discount: 0.99
+reward_scaling: 1.0
+learning_rate: 3e-4
+soft_tau_update: 0.005
+alpha_init: 1.0
+fix_alpha: False
+normalize_observations: False
+normalize_feat: True
+
+# SCOPA
+delta: 0.01
+delta_pseudo_huber_loss: 1e-3
+lambda_: 1.
+num_random_skill_batches: 1
+
+# Passive Archive
+num_init_cvt_samples: 50000
+num_centroids: 1024

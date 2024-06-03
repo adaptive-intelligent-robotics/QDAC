@@ -1,0 +1,30 @@
+hydra:
+  job:
+    chdir: True
+  run:
+    dir: ./output/adaptation_hurdle/${now:%Y-%m-%d_%H%M%S_%f}
+
+seed: 42
+num_iterations: 1_0_000
+log_period: 100
+env_batch_size: 256
+action_repeat: 1
+
+run_path: /project/output/results/ours/humanoid_jump/2023-09-20_174842_406818
+# run_path: /project/output/results/smerl/humanoid_jump/2023-09-18_005017_789227
+# run_path: /project/output/results/smerl_reverse/humanoid_jump/2023-09-18_045342_456752
+# run_path: /project/output/results/dcg_me/humanoid_jump/2023-09-16_222045_504076
+
+# SAC
+warmup_steps: 1_000_000
+hidden_layer_sizes: [256, 256]
+grad_updates_per_step: 1.
+batch_size: 256
+replay_buffer_size: 1_024_000
+discount: 0.99
+reward_scaling: 1.0
+learning_rate: 3e-4
+soft_tau_update: 0.005
+alpha_init: 1.0
+fix_alpha: False
+normalize_observations: False

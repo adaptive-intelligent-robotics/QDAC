@@ -1,0 +1,13 @@
+hydra:
+  job:
+    chdir: True
+  run:
+    dir: ./output/${algo.name}/${task}_${feat}/${now:%Y-%m-%d_%H%M%S_%f}
+
+defaults:
+  - _self_
+  - algo: smerl_reverse
+
+task: ???
+feat: ???
+seed: 42

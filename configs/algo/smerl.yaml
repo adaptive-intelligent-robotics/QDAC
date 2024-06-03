@@ -1,0 +1,35 @@
+name: smerl
+
+num_iterations: 50_000
+log_period: 1000
+warmup_steps: 10
+env_batch_size: 256
+
+# Env
+backend: spring
+episode_length: 1000
+
+# SAC
+hidden_layer_sizes: [256, 256]
+grad_updates_per_step: 1.
+batch_size: 256
+replay_buffer_size: 1_024_000
+discount: 0.99
+reward_scaling: 1.0
+learning_rate: 3e-4
+soft_tau_update: 0.005
+alpha_init: 1.0
+fix_alpha: False
+normalize_observations: False
+
+# DIAYN
+skill_type: normal  # categorical or normal
+num_skills: 2  # if skill_type is normal, num_skills is the dimension of the skill space
+descriptor_full_state: False
+num_init_cvt_samples: 50000  # passive repertoire
+num_centroids: 1024  # passive repertoire
+
+# SMERL
+diversity_reward_scale: 10.0
+smerl_target: 5000
+smerl_margin: 500

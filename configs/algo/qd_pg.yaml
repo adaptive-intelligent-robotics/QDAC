@@ -1,0 +1,44 @@
+name: qd_pg
+
+num_iterations: 100
+log_period: 10
+env_batch_size: 256
+
+# Env
+backend: spring
+episode_length: 1000
+
+# Archive
+num_init_cvt_samples: 50000
+num_centroids: 1024
+policy_hidden_layer_sizes: [128, 128]
+
+ga_batch_size: 86
+qpg_batch_size: 85
+dpg_batch_size: 85
+
+# GA emitter
+iso_sigma: 0.005
+line_sigma: 0.05
+
+# QD-PG emitter
+critic_hidden_layer_size: [256, 256]
+num_q_critic_training_steps: 300
+num_d_critic_training_steps: 300
+num_pg_training_steps: 150
+batch_size: 100
+replay_buffer_size: 1_000_000
+discount: 0.99
+reward_scaling: 1.0
+critic_learning_rate: 3e-4
+actor_learning_rate: 3e-4
+policy_learning_rate: 5e-3
+noise_clip: 0.5
+policy_noise: 0.2
+soft_tau_update: 0.005
+policy_delay: 2
+
+archive_acceptance_threshold: 0.1
+archive_max_size: 10000
+num_nearest_neighb: 3
+novelty_scaling_ratio: 1.0

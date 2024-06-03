@@ -1,0 +1,42 @@
+name: ppga
+
+# Env
+backend: spring
+episode_length: 1000
+
+#env_name: $ENV_NAME
+
+
+# PPGA
+torch_deterministic: False
+use_wandb: True
+
+rollout_length: 128
+wandb_group: paper
+#num_dims: 2  # TODO depends on the task + feature descriptors
+#seed: 42  # TODO
+anneal_lr: False
+num_minibatches: 8
+update_epochs: 4
+normalize_obs: True
+normalize_returns: True
+clip_obs_rew: True
+adaptive_stddev: False
+#wandb_run_name: $RUN_NAME  # TODO
+popsize: 300
+env_batch_size: 3000
+learning_rate: 0.0003
+vf_coef: 2
+entropy_coef: 0.0
+target_kl: 0.008
+max_grad_norm: 1
+total_iterations: 1250 # Has been tuned to produce at least 10M evaluations
+dqd_algorithm: cma_maega
+sigma0: 0.5
+restart_rule: no_improvement
+calc_gradient_iters: 10
+move_mean_iters: 10
+archive_lr: 0.1
+threshold_min: 200
+#grid_size: 50  # TODO: except Ant feet contact
+#expdir: ./experiments/paper_ppga_"$ENV_NAME"  # TODO

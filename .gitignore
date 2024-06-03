@@ -1,0 +1,34 @@
+*.whl
+wandb/
+venv/
+baselines/PPGA/pyribs/build/
+
+.pytest_cache
+dist
+__pycache__/
+*.py[cod]
+*.egg-info
+MUJOCO_LOG.TXT
+;
+.idea/
+
+# Apptainer
+apptainer/*.sif
+apptainer/tmp/
+apptainer/var_tmp/
+
+# Output
+output/
+
+results*
+
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.pdf
+*.svg
+*.eps
+
+*.csv
+.DS_Store

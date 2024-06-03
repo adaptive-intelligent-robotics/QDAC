@@ -1,0 +1,36 @@
+name: domino
+
+num_iterations: 1_000_000
+log_period: 1000
+warmup_steps: 10
+env_batch_size: 6
+
+# Env
+backend: spring
+episode_length: 1000
+
+# SAC
+hidden_layer_sizes: [256, 256]
+grad_updates_per_step: 1.
+batch_size: 60
+replay_buffer_size: 150000
+discount: 0.99
+reward_scaling: 1.0
+learning_rate: 1e-4
+learning_rate_lagrange: 1e-3
+soft_tau_update: 0.005
+alpha_init: 1.0
+fix_alpha: False
+normalize_observations: False
+
+# DOMINO
+skill_type: categorical
+num_skills: 10
+descriptor_full_state: False
+# extrinsic_reward: True
+# beta: 2.
+num_init_cvt_samples: 50000  # passive repertoire
+num_centroids: 1024  # passive repertoire
+optimality_ratio: 0.9
+alpha_d_v_avg: 0.9
+alpha_d_sfs_avg: 0.99
