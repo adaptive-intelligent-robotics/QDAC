@@ -81,10 +81,10 @@ The results take the form of a csv file in the quality-diversity experiment fold
 
 ```
 @inproceedings{airl2024qdac,
-title={Quality-Diversity Actor-Critic: Learning High-Performing and Diverse Behaviors via Value and Successor Features Critics},
-author={Grillotti, Luca and Faldor, Maxence and González León, Borja and Cully, Antoine},
-booktitle={International Conference on Machine Learning},
-year={2024},
-organization={PMLR}
+	title={Quality-Diversity Actor-Critic: Learning High-Performing and Diverse Behaviors via Value and Successor Features Critics},
+	author={Grillotti, Luca and Faldor, Maxence and González León, Borja and Cully, Antoine},
+	booktitle={International Conference on Machine Learning},
+	year={2024},
+	organization={PMLR},
 }
 ```
